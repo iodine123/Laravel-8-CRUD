@@ -13,6 +13,6 @@ spec:
     spec:
       containers:
         - name: demo
-          image: laravel-kubernetes-demo
+          image: iodinehanifan/laravel-app
           ports:
             - containerPort: 80

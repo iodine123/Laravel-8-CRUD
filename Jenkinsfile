@@ -30,7 +30,7 @@ pipeline{
                         git config --global user.name "iodine123"
                         git config --global user.email "iodinehanifan@gmail.com"
                     '''
-                sh "sed -i 's/nginx.*/nginx:1.${BUILD_NUMBER}/g' deployment/app-tier.yml"
+                sh "sed -i 's/iodinehanifan/laravel-app.*/iodinehanifan/laravel-app:1.${BUILD_NUMBER}/g' deployment/app-deployment.yml"
                 sh "cat deployment/app-tier.yml"  
                 sh '''
                         git add deployment/app-tier.yml
