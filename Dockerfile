@@ -9,7 +9,6 @@ EXPOSE 8000
 COPY --from=build /app /app
 COPY application/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
-RUN php /app/artisan migrate --no-interaction
 RUN php /app/artisan cache:clear
 RUN php /app/artisan config:clear
 RUN php /app/artisan view:clear
