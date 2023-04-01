@@ -8,8 +8,8 @@ FROM php:7.1.8-apache
 EXPOSE 8000
 COPY --from=build /app /app
 COPY application/vhost.conf /etc/apache2/sites-available/000-default.conf
-RUN chgrp -R www-data /var/www/html/application
-RUN chmod -R 775 /var/www/html/application/storage
+RUN chgrp -R www-data /var/www/html/app
+RUN chmod -R 775 /var/www/html/app/storage
 RUN a2enmod rewrite
 RUN php artisan migrate
 RUN php artisan cache:clear
