@@ -13,4 +13,4 @@ RUN php /app/artisan cache:clear
 RUN php /app/artisan config:clear
 RUN php /app/artisan view:clear
 RUN php /app/artisan route:clear
-CMD ["php" "/app/artisan" "serve"] 
+CMD ["php", "/app/artisan", "serve"] 
