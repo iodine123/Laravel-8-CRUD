@@ -35,7 +35,8 @@ pipeline{
                 sh '''
                         git add deployment/app-tier.yml
                         git commit -m "Update manifest"
-                        git push http://$GITHUB_PUSH_USR:$GITHUB_PUSH_PSW@github.com/iodine123/Laravel-8-CRUD HEAD:master
+                        git remote set-url origin https://$GITHUB_PUSH_PSW@https://github.com/iodine123/Laravel-8-CRUD.git
+                        git push https://$GITHUB_PUSH_USR:$GITHUB_PUSH_PSW@https://github.com/iodine123/Laravel-8-CRUD.git HEAD:master
                     '''         
             }
         }
