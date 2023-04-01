@@ -41,7 +41,7 @@ pipeline{
                     '''
                 }
                 withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'pass', usernameVariable: 'user')]){
-                    sh "git push http://$user:$pass@github.com/iodine123/Laravel-8-CRUD.git"
+                    sh "git push http://$user:$pass@github.com/iodine123/Laravel-8-CRUD.git master"
                 }
             }
         }
