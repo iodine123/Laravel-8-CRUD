@@ -12,7 +12,7 @@ spec:
         app: app-tier
     spec:
       containers:
-        - name: demo
+        - name: app-tier
           image: iodinehanifan/laravel-app
           ports:
             - containerPort: 80
