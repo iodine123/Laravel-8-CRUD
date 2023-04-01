@@ -25,10 +25,8 @@ pipeline{
 
         stage("Update manifest for deployment"){
             steps{
-                sh '''
-                    sed -i 's/nginx.*/nginx:1./${BUILD_NUMBER}/g' deployment/app-tier.yml
-                    cat deployment/app-tier.yml
-                '''
+                sh "sed -i 's/nginx.*/nginx:1.${BUILD_NUMBER}/g' deployment/app-tier.yml"
+                sh "cat deployment/app-tier.yml"           
             }
         }
 
