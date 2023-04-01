@@ -23,11 +23,28 @@ pipeline{
             }
         }
 
-        stage("Deploy"){
+        stage("Update manifest for deployment"){
             steps{
-                sh ''' 
-                    cd deployment
+                sh '''
+                    sed -i 's/nginx.*/nginx:${BUILD_NUMBER}/g' deployment/app-tier.yml
+                    cat deployment/app-tier.yml
                 '''
+            }
+        }
+
+        stage("Push to Git"){
+            steps{
+                script{
+                    sh '''
+                        git config --global user.name "iodine123"
+                        git config --global user.email "iodinehanifan@gmail.com"
+                        git add deployment/app-tier.yml
+                        git commit -m "Update manifest"
+                    '''
+                }
+                withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'pass', userNameVariable: 'user')]){
+                    sh "git push http://$user:$pass@github.com/iodine123/Laravel-8-CRUD.git master"
+                }
             }
         }
     }
