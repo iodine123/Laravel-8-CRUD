@@ -8,4 +8,4 @@ WORKDIR /var/www/
 
 COPY application /var/www/
 
-EXPOSE 8000
+EXPOSE 8001
