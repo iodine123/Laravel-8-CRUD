@@ -37,6 +37,7 @@ pipeline{
                     sh '''
                         git config --global user.name "iodine123"
                         git config --global user.email "iodinehanifan@gmail.com"
+                        git checkout master
                         git add deployment/app-tier.yml
                         git commit -m "Update manifest"
                         git push http://$GITHUB_PUSH_USR:$GITHUB_PUSH_PSW@github.com/iodine123/Laravel-8-CRUD origin master
