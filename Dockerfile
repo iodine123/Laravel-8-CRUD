@@ -12,6 +12,5 @@ RUN a2enmod rewrite
 RUN php /app/artisan cache:clear
 RUN php /app/artisan config:clear
 RUN php /app/artisan view:clear
-RUN php /app/artisan key:generate
 RUN php /app/artisan route:clear
-RUN php /app/artisan serve 
+CMD php /app/artisan serve 
