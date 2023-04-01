@@ -9,10 +9,10 @@ EXPOSE 8000
 COPY --from=build /app /app
 COPY application/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
-RUN php artisan migrate
-RUN php artisan cache:clear
-RUN php artisan config:clear
-RUN php artisan view:clear
-RUN php artisan key:generate
-RUN php artisan route:clear
-RUN php artisan serve 
+RUN php /app/artisan migrate
+RUN php /app/artisan cache:clear
+RUN php /app/artisan config:clear
+RUN php /app/artisan view:clear
+RUN php /app/artisan key:generate
+RUN php /app/artisan route:clear
+RUN php /app/artisan serve 
