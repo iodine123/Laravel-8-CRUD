@@ -41,7 +41,7 @@ pipeline{
                         git commit -m "Update manifest"
                     '''
                 }
-                withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'pass', usernameVariable: 'user')]){
+                withCredentials([usernamePassword(credentialsId: 'github-push', passwordVariable: 'pass', usernameVariable: 'user')]){
                     sh "git push http://$user:$pass@github.com/iodine123/Laravel-8-CRUD.git master"
                 }
             }
