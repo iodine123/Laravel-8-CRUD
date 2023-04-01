@@ -26,7 +26,7 @@ pipeline{
         stage("Update manifest for deployment"){
             steps{
                 sh '''
-                    sed -i 's/nginx.*/nginx:${BUILD_NUMBER}/g' deployment/app-tier.yml
+                    sed -i 's/nginx.*/nginx:1.${BUILD_NUMBER}/g' deployment/app-tier.yml
                     cat deployment/app-tier.yml
                 '''
             }
@@ -43,7 +43,7 @@ pipeline{
                     '''
                 }
                 withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'pass', usernameVariable: 'user')]){
-                    sh "git push http://$user:$pass@github.com/iodine123/Laravel-8-CRUD.git master"
+                    sh "git push http://$user:$pass@github.com/iodine123/Laravel-8-CRUD.git origin master"
                 }
             }
         }
