@@ -24,25 +24,19 @@ pipeline{
             }
         }
 
-        stage("Update manifest for deployment"){
+        stage("Update Manifest"){
             steps{
-                sh "sed -i 's/nginx.*/nginx:1.${BUILD_NUMBER}/g' deployment/app-tier.yml"
-                sh "cat deployment/app-tier.yml"           
-            }
-        }
-
-        stage("Push to Git"){
-            steps{
-                script{
-                    sh '''
+                sh ''' 
                         git config --global user.name "iodine123"
                         git config --global user.email "iodinehanifan@gmail.com"
-                        git checkout master
+                    '''
+                sh "sed -i 's/nginx.*/nginx:1.${BUILD_NUMBER}/g' deployment/app-tier.yml"
+                sh "cat deployment/app-tier.yml"  
+                sh '''
                         git add deployment/app-tier.yml
                         git commit -m "Update manifest"
                         git push http://$GITHUB_PUSH_USR:$GITHUB_PUSH_PSW@github.com/iodine123/Laravel-8-CRUD origin master
-                    '''
-                }
+                    '''         
             }
         }
     }
