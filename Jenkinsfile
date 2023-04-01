@@ -32,10 +32,10 @@ pipeline{
                         git config --global user.name "iodine123"
                         git config --global user.email "iodinehanifan@gmail.com"
                     '''
-                sh """ sed -i "s/${APP_NAME}.*/${APP_NAME}.${BUILD_NUMBER}/g" deployment/app-deployment.yml"""
-                sh "cat deployment/app-tier.yml"  
+                sh """ sed -i "s/${APP_NAME}.*/${APP_NAME}:1.${BUILD_NUMBER}/g" deployment/app-deployment.yml"""
+                sh "cat deployment/app-deployment.yml"  
                 sh '''
-                        git add deployment/app-tier.yml
+                        git add deployment/app-deployment.yml
                         git commit -m "Update manifest"
                         git remote set-url origin https://$GITHUB_PUSH_PSW@github.com/iodine123/Laravel-8-CRUD.git
                         git push https://$GITHUB_PUSH_USR:$GITHUB_PUSH_PSW@github.com/iodine123/Laravel-8-CRUD.git HEAD:master
