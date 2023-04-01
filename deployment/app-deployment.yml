@@ -15,4 +15,4 @@ spec:
         - name: app-tier
           image: iodinehanifan/laravel-app
           ports:
-            - containerPort: 80
+            - containerPort: 9000
