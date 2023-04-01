@@ -15,4 +15,7 @@ spec:
         - name: app-tier
           image: iodinehanifan/laravel-app
           ports:
-            - containerPort: 9000
+            - containerPort: 80
+          env:
+            - name: APP_KEY
+              value: 12345
