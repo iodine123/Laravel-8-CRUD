@@ -2,6 +2,7 @@ pipeline{
     agent any
     environment{
         DOCKERHUB_CREDENTIALS=credentials('dockerhub-credentials')
+        GITHUB_PUSH=credentials('git-push')
     }
     stages{
         stage("Build Image"){
@@ -38,10 +39,8 @@ pipeline{
                         git config --global user.email "iodinehanifan@gmail.com"
                         git add deployment/app-tier.yml
                         git commit -m "Update manifest"
+                        git push http://$GITHUB_PUSH_USR:$GITHUB_PUSH_PSW@github.com/iodine123/Laravel-8-CRUD origin master
                     '''
-                }
-                withCredentials([gitUsernamePassword(credentialsId: 'git-push', gitToolName: 'Default')]){
-                    sh "git push -u origin master"
                 }
             }
         }
