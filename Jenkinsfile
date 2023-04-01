@@ -4,7 +4,7 @@ pipeline{
         DOCKERHUB_CREDENTIALS=credentials('dockerhub-credentials')
         GITHUB_PUSH=credentials('git-push')
         APP_NAME="laravel-app"
-        IMAGE_NAME="${DOCKERHUB_CREDENTIALS_USR}" + "/" + "${APP_NAME}" + "1."
+        IMAGE_NAME="${DOCKERHUB_CREDENTIALS_USR}" + "/" + "${APP_NAME}" + ":1."
     }
     stages{
         stage("Build Image"){
