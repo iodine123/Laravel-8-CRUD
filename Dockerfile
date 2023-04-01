@@ -1,7 +1,6 @@
 FROM composer:latest as build
 WORKDIR /app
 COPY application /app
-RUN composer update
 RUN composer install
 
 FROM php:7.1.8-apache
