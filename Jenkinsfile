@@ -36,7 +36,6 @@ pipeline{
                     sh '''
                         git config --global user.name "iodine123"
                         git config --global user.email "iodinehanifan@gmail.com"
-                        git checkout -b master
                         git add deployment/app-tier.yml
                         git commit -m "Update manifest"
                     '''
