@@ -9,7 +9,7 @@ pipeline{
                 sh ''' 
                     rm -rf Laravel-8-CRUD
                     git clone https://github.com/iodine123/Laravel-8-CRUD
-                    docker build -t iodinehanifan/laravel-app .
+                    docker build -t iodinehanifan/laravel-app:1.${BUILD_NUMBER} .
                 '''
             }
         }
@@ -18,7 +18,7 @@ pipeline{
             steps{
                 sh ''' 
                     echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                    docker push iodinehanifan/laravel-app
+                    docker push iodinehanifan/laravel-app:1.${BUILD_NUMBER}
                 '''
             }
         }
@@ -42,7 +42,7 @@ pipeline{
                         git commit -m "Update manifest"
                     '''
                 }
-                withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'pass', userNameVariable: 'user')]){
+                withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'pass', usernameVariable: 'user')]){
                     sh "git push http://$user:$pass@github.com/iodine123/Laravel-8-CRUD.git master"
                 }
             }
