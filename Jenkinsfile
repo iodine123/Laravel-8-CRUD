@@ -22,5 +22,13 @@ pipeline{
                 '''
             }
         }
+
+        stage("Deploy"){
+            steps{
+                sh ''' 
+                    cd deployment
+                '''
+            }
+        }
     }
 }
