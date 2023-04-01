@@ -36,12 +36,13 @@ pipeline{
                     sh '''
                         git config --global user.name "iodine123"
                         git config --global user.email "iodinehanifan@gmail.com"
+                        git checkout -b master
                         git add deployment/app-tier.yml
                         git commit -m "Update manifest"
                     '''
                 }
                 withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'pass', usernameVariable: 'user')]){
-                    sh "git push http://$user:$pass@github.com/iodine123/Laravel-8-CRUD master"
+                    sh "git push http://$user:$pass@github.com/iodine123/Laravel-8-CRUD.git master"
                 }
             }
         }
