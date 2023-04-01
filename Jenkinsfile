@@ -40,8 +40,8 @@ pipeline{
                         git commit -m "Update manifest"
                     '''
                 }
-                withCredentials([usernamePassword(credentialsId: 'github-push', passwordVariable: 'pass', usernameVariable: 'user')]){
-                    sh "git push origin master"
+                withCredentials([usernamePassword(credentialsId: 'git-push', gitToolName: 'Default')]){
+                    sh "git push -u origin master"
                 }
             }
         }
