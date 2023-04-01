@@ -13,8 +13,7 @@ pipeline{
                 '''
             }
         }
-    }
-    stages{
+    
         stage("Push Image"){
             steps{
                 sh ''' 
