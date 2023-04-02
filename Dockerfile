@@ -1,27 +1,32 @@
-FROM php:8.1-apache
+FROM ubuntu:latest
 
-WORKDIR /var/www/html
-
-RUN docker-php-ext-install pdo pdo_mysql
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+WORKDIR /app/src
 
 COPY . .
 
 RUN apt-get -y update
 
-RUN apt-get -y install git
+RUN apt install apache2
 
-RUN apt install -y zip unzip php-zip
+RUN ufw allow “Apache Full”
 
-RUN composer install --no-dev --no-interaction --no-scripts --prefer-dist --optimize-autoloader
+RUN apt install php libapache2-mod-php php-mbstring php-xmlrpc php-soap php-gd php-xml php-cli php-zip php-bcmath php-tokenizer php-json php-pear
 
-COPY ./apache2.conf /etc/apache2/apache2.conf
+RUN curl -sS https://getcomposer.org/installer | php
 
-RUN a2enmod rewrite
+RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+RUN mv composer.phar /usr/local/bin/composer
 
-EXPOSE 80
+RUN chmod +x /usr/local/bin/composer
 
-CMD ["apache2-foreground"]
+RUN composer update
+
+RUN composer install
+
+RUN php artisan cache:clear
+RUN php artisan config:clear
+RUN php artisan view:clear
+RUN php artisan key:generate
+RUN php artisan route:clear
+RUN php artisan serve --host=127.0.0.1 --port=80
