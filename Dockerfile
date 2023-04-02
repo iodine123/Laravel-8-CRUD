@@ -9,7 +9,7 @@ WORKDIR /var/www/html
 
 COPY application .
 
-RUN composer install --no-interaction --no-scripts 
+RUN composer install 
 
 COPY /application/nginx.conf /etc/nginx/conf.d/default.conf
 
