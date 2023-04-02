@@ -7,4 +7,4 @@ spec:
     app: app-tier
   ports:
     - port: 80
-      targetPort: 8000
+      targetPort: 80
