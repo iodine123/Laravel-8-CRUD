@@ -5,7 +5,7 @@ COPY . /app
 RUN composer require fideloper/proxy
 RUN composer install
 
-FROM php:7.3-apache
+FROM php:8.1-apache
 
 RUN docker-php-ext-install pdo pdo_mysql
 COPY --from=build /app /var/www/html/
