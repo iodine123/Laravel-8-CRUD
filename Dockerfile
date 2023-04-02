@@ -11,7 +11,6 @@ RUN docker-php-ext-install pdo pdo_mysql
 COPY --from=build /app /var/www/html
 COPY ./apache2.conf /etc/apache2/apache2.conf
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN chmod -R 777 /var/www/html
 RUN a2enmod rewrite
 EXPOSE 80
 CMD ["apache2-foreground"]
