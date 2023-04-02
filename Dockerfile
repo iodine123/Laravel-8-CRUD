@@ -17,7 +17,7 @@ COPY application .
 RUN composer install --no-interaction --no-scripts --prefer-dist --optimize-autoloader
 
 # Copy the Nginx configuration file
-COPY ./docker/application/nginx.conf /etc/nginx/conf.d/default.conf
+COPY /application/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose the port used by Nginx
 EXPOSE 80
