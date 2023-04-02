@@ -9,7 +9,7 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer install --no-interaction --no-scripts --prefer-dist --optimize-autoloader
+RUN cd application && composer install --no-interaction --no-scripts --prefer-dist --optimize-autoloader
 
 COPY /application/nginx.conf /etc/nginx/conf.d/default.conf
 
