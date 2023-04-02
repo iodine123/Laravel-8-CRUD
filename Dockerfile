@@ -9,9 +9,7 @@ WORKDIR /var/www/html
 
 COPY application .
 
-COPY .git .
-
-RUN composer install --no-interaction --no-scripts --prefer-dist --optimize-autoloader
+RUN composer install --no-dev --no-interaction --no-scripts --prefer-dist --optimize-autoloader
 
 COPY /application/nginx.conf /etc/nginx/conf.d/default.conf
 
