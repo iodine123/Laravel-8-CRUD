@@ -6,11 +6,11 @@ COPY . .
 
 RUN apt-get -y update
 
-RUN apt install apache2
+RUN apt install -y apache2
 
 RUN ufw allow “Apache Full”
 
-RUN apt install php libapache2-mod-php php-mbstring php-xmlrpc php-soap php-gd php-xml php-cli php-zip php-bcmath php-tokenizer php-json php-pear
+RUN apt install -y php libapache2-mod-php php-mbstring php-xmlrpc php-soap php-gd php-xml php-cli php-zip php-bcmath php-tokenizer php-json php-pear
 
 RUN curl -sS https://getcomposer.org/installer | php
 
