@@ -1,30 +1,16 @@
-FROM ubuntu:latest
+FROM composer:latest as build
 
-WORKDIR /app/src
-
-COPY . .
-
-RUN apt-get -y update
-
-RUN apt install -y apache2
-
-RUN apt install -y php libapache2-mod-php php-mbstring php-xmlrpc php-soap php-gd php-xml php-cli php-zip php-bcmath php-tokenizer php-json php-pear
-
-RUN curl -sS https://getcomposer.org/installer | php
-
-RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
-
-RUN mv composer.phar /usr/local/bin/composer
-
-RUN chmod +x /usr/local/bin/composer
-
-RUN composer update
-
+WORKDIR /app
+COPY . /app
+RUN composer require fideloper/proxy
 RUN composer install
 
-RUN php artisan cache:clear
-RUN php artisan config:clear
-RUN php artisan view:clear
-RUN php artisan key:generate
-RUN php artisan route:clear
-CMD ["php", "artisan", "serve", "--host=127.0.0.1", "--port=80"]
+FROM php:8.2.2-apache
+
+RUN docker-php-ext-install pdo pdo_mysql
+COPY --from=build /app /var/www/html
+COPY application/apache2.conf /etc/apache2/apache2.conf
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+RUN a2enmod rewrite
+EXPOSE 80
+CMD ["apache2-foreground"]
