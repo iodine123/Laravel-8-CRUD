@@ -6,7 +6,7 @@ RUN composer install
 
 FROM php:8.2.2-apache
 EXPOSE 8000
-COPY --from=build /app /app
+COPY --from=build /app /var/www/html/app
 COPY application/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY application/httpd.conf /etc/apache2/httpd.conf
 RUN a2dissite 000-default.conf
