@@ -9,6 +9,8 @@ WORKDIR /var/www/html
 
 COPY application .
 
+COPY .git .
+
 RUN composer install 
 
 COPY /application/nginx.conf /etc/nginx/conf.d/default.conf
