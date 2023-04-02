@@ -27,4 +27,4 @@ RUN php artisan config:clear
 RUN php artisan view:clear
 RUN php artisan key:generate
 RUN php artisan route:clear
-RUN php artisan serve --host=127.0.0.1 --port=80
+CMD ["php", "artisan", "serve", "--host=127.0.0.1", "--port=80"]
