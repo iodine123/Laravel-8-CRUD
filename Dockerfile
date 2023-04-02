@@ -8,7 +8,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY . .
 
-RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get -y update
 
 RUN apt-get install git
 
