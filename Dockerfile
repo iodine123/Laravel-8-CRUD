@@ -8,7 +8,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY . .
 
-RUN composer install --no-dev --no-interaction --no-scripts --prefer-source --optimize-autoloader
+RUN apt-get install git
+
+RUN composer install --no-dev --no-interaction --no-scripts --prefer-dist --optimize-autoloader
 
 COPY ./apache2.conf /etc/apache2/apache2.conf
 
