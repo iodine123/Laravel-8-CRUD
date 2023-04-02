@@ -12,6 +12,13 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: app-tier-service
+                name: app-service
                 port:
                   number: 80
+          - path: /mysql
+            pathType: Prefix
+            backend:
+              service:
+                name: mysql-svc
+                port:
+                  number: 3306
