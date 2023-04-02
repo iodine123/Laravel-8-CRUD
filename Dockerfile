@@ -12,6 +12,8 @@ RUN apt-get -y update
 
 RUN apt-get -y install git
 
+RUN apt install -y zip unzip php-zip
+
 RUN composer install --no-dev --no-interaction --no-scripts --prefer-dist --optimize-autoloader
 
 COPY ./apache2.conf /etc/apache2/apache2.conf
