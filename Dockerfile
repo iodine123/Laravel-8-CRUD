@@ -3,6 +3,7 @@ FROM composer:latest as build
 WORKDIR /app
 COPY . /app
 RUN composer require fideloper/proxy
+RUN composer update
 RUN composer install
 
 FROM php:8.1-apache
