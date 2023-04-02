@@ -8,6 +8,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY . .
 
+RUN apt-get -y update && apt-get -y upgrade
+
 RUN apt-get install git
 
 RUN composer install --no-dev --no-interaction --no-scripts --prefer-dist --optimize-autoloader
