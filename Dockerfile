@@ -10,7 +10,7 @@ COPY . .
 
 RUN apt-get -y update
 
-RUN apt-get install git
+RUN apt-get -y install git
 
 RUN composer install --no-dev --no-interaction --no-scripts --prefer-dist --optimize-autoloader
 
