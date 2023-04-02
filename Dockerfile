@@ -8,6 +8,8 @@ RUN apt-get -y update
 
 RUN apt install -y apache2
 
+RUN apt install -y ufw
+
 RUN ufw allow “Apache Full”
 
 RUN apt install -y php libapache2-mod-php php-mbstring php-xmlrpc php-soap php-gd php-xml php-cli php-zip php-bcmath php-tokenizer php-json php-pear
