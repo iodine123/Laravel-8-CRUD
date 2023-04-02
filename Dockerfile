@@ -1,16 +1,21 @@
-FROM composer:latest as build
+FROM php:8.1-apache
 
-WORKDIR /app
-COPY application /app
-RUN composer require fideloper/proxy
-RUN composer install
-
-FROM php:8.2.2-apache
+WORKDIR /var/www/html
 
 RUN docker-php-ext-install pdo pdo_mysql
-COPY --from=build /app /var/www/html/app
-COPY application/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY application/apache2.conf /etc/apache2/apache2.conf
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+COPY application .
+
+RUN composer install --no-interaction --no-scripts --prefer-dist --optimize-autoloader
+
+COPY ./application/apache2.conf /etc/apache2/apache2.conf
+
 RUN a2enmod rewrite
+
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
 EXPOSE 80
+
 CMD ["apache2-foreground"]
