@@ -11,7 +11,7 @@ COPY application .
 
 COPY .git .
 
-RUN composer install 
+RUN composer install --no-interaction --no-scripts --prefer-dist --optimize-autoloader
 
 COPY /application/nginx.conf /etc/nginx/conf.d/default.conf
 
