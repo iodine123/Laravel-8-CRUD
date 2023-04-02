@@ -17,4 +17,4 @@ RUN php /var/www/html/app/artisan cache:clear
 RUN php /var/www/html/app/artisan config:clear
 RUN php /var/www/html/app/artisan view:clear
 RUN php /var/www/html/app/artisan route:clear
-CMD ["php", "/var/www/html/app/artisan", "serve", "--host", "service-app", "--port", "8000"] 
+CMD ["php", "/var/www/html/app/artisan", "serve", "--host", "127.0.0.1", "--port", "80"] 
