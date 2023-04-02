@@ -14,7 +14,7 @@ spec:
               service:
                 name: app-service
                 port:
-                  number: 80
+                  number: 32001
           - path: /mysql
             pathType: Prefix
             backend:

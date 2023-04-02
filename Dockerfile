@@ -13,8 +13,3 @@ RUN a2dissite 000-default.conf
 RUN a2ensite 000-default.conf
 RUN a2enmod rewrite
 RUN service apache2 restart
-RUN php /var/www/html/app/artisan cache:clear
-RUN php /var/www/html/app/artisan config:clear
-RUN php /var/www/html/app/artisan view:clear
-RUN php /var/www/html/app/artisan route:clear
-CMD ["php", "/var/www/html/app/artisan", "serve", "--host", "127.0.0.1", "--port", "8000"] 
