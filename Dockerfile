@@ -1,36 +1,20 @@
-FROM php:8.1-fpm-alpine
+FROM composer:latest as build
+WORKDIR /app
+COPY application /app
+RUN composer require fideloper/proxy
+RUN composer install
 
-# Install required packages
-RUN apk add --no-cache nginx supervisor \
-    && docker-php-ext-install pdo_mysql \
-    && apk add --no-cache zip unzip libzip-dev \
-    && docker-php-ext-install zip \
-    && apk add --no-cache oniguruma-dev \
-    && docker-php-ext-install mbstring \
-    && apk add --no-cache libpng-dev \
-    && docker-php-ext-install gd
-
-# Copy Nginx configuration file
-COPY docker/nginx.conf /etc/nginx/nginx.conf
-
-# Copy PHP-FPM configuration file
-COPY docker/fpm-pool.conf /usr/local/etc/php-fpm.d/www.conf
-
-# Set working directory
-WORKDIR /var/www/html
-
-# Copy the Laravel project files
-COPY . .
-
-# Install composer dependencies
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader --no-progress
-
-# Generate the Laravel application key
-RUN php artisan key:generate
-
-# Expose port 80
-EXPOSE 80
-
-# Start Supervisor to run Nginx and PHP-FPM
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+FROM php:8.2.2-apache
+EXPOSE 8000
+COPY --from=build /app /var/www/html/app
+COPY application/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY application/apache2.conf /etc/apache2/apache2.conf
+RUN a2dissite 000-default.conf
+RUN a2ensite 000-default.conf
+RUN a2enmod rewrite
+RUN service apache2 restart
+RUN php /var/www/html/app/artisan cache:clear
+RUN php /var/www/html/app/artisan config:clear
+RUN php /var/www/html/app/artisan view:clear
+RUN php /var/www/html/app/artisan route:clear
+CMD ["php", "/var/www/html/app/artisan", "serve", "--host", "service-app", "--port", "8000"] 
