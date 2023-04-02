@@ -1,12 +1,22 @@
-FROM php:7.4-fpm-alpine
-
-RUN docker-php-ext-install pdo pdo_mysql sockets
-RUN curl -sS https://getcomposer.org/installer​ | php -- \
-     --install-dir=/usr/local/bin --filename=composer
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
+FROM composer:latest as build
 WORKDIR /app
-COPY application .
+COPY application /app
+RUN composer require fideloper/proxy
 RUN composer install
-CMD ["php", "/app/artisan", "serve"] 
+
+FROM php:8.2.2-apache
+EXPOSE 8000
+COPY --from=build /app /var/www/html/app
+RUN chown -R www-data:www-data /var/www/html/app
+RUN chmod -R 775 /var/www/html/app
+COPY application/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY application/apache2.conf /etc/apache2/apache2.conf
+RUN a2dissite 000-default.conf
+RUN a2ensite 000-default.conf
+RUN a2enmod rewrite
+RUN service apache2 restart
+RUN php /var/www/html/app/artisan cache:clear
+RUN php /var/www/html/app/artisan config:clear
+RUN php /var/www/html/app/artisan view:clear
+RUN php /var/www/html/app/artisan route:clear
+CMD ["php", "/var/www/html/app/artisan", "serve"] 
