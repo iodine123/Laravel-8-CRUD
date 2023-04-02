@@ -1,18 +1,34 @@
+FROM php:7.4-fpm-alpine
 
-FROM php:8.1-fpm
-
+# Install required PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql
 
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install git
+RUN apk add --no-cache git
+
+# Set working directory
 WORKDIR /var/www/html
 
+# Copy Laravel application files
 COPY application .
 
-RUN composer install --no-dev --no-interaction --no-scripts --prefer-dist --optimize-autoloader
+# Install dependencies
+RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-scripts --no-progress
 
-COPY /application/nginx.conf /etc/nginx/conf.d/default.conf
+# Set permissions for Laravel storage directory
+RUN chown -R www-data:www-data storage
 
+# Copy Nginx configuration file
+COPY application/nginx.conf /etc/nginx/nginx.conf
+
+# Install Nginx
+RUN apk add --no-cache nginx
+
+# Expose port 80
 EXPOSE 80
 
-CMD ["sh", "-c", "service php8.1-fpm start && nginx -g 'daemon off;'"]
+# Start Nginx and PHP-FPM services
+CMD service nginx start && php-fpm
